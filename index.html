@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MHQVDJSJ');</script>
+    <!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventAI - Intelligent Event Analytics & ROI Optimization</title>
@@ -497,6 +505,11 @@
     </style>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHQVDJSJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <header>
         <div class="logo">EventAI</div>
         <nav class="nav-links">
@@ -654,6 +667,9 @@
     </footer>
 
     <script>
+        // Initialize dataLayer for GTM
+        window.dataLayer = window.dataLayer || [];
+        
         function handleSubmit(event) {
             event.preventDefault();
             
@@ -662,14 +678,92 @@
             const company = document.getElementById('company').value;
             const segment = document.getElementById('segment').value;
             
-            console.log('Demo request submitted:', { name, email, company, segment });
+            // Send conversion to GTM
+            window.dataLayer.push({
+                'event': 'demo_request',
+                'event_category': 'conversion',
+                'event_label': 'Demo Request Submitted',
+                'user_name': name,
+                'company': company,
+                'role': segment,
+                'email': email
+            });
+            
+            console.log('Demo request submitted & tracked:', { name, email, company, segment });
             
             alert(`Thanks ${name}! We'll send you a demo link at ${email} shortly.`);
             document.querySelector('form').reset();
-            
-            // GA4 conversion tracking would go here
-            // gtag('event', 'demo_request', { company: company, role: segment });
         }
+        
+        // Track CTA Button Clicks
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function() {
+                window.dataLayer.push({
+                    'event': 'cta_click',
+                    'event_category': 'engagement',
+                    'event_label': this.textContent.trim()
+                });
+            });
+        });
+        
+        // Track Scroll Depth
+        let scrollTracked = {
+            '25': false,
+            '50': false,
+            '75': false,
+            '100': false
+        };
+        
+        window.addEventListener('scroll', function() {
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            
+            if (scrollPercent > 25 && !scrollTracked['25']) {
+                window.dataLayer.push({
+                    'event': 'scroll_depth',
+                    'event_category': 'engagement',
+                    'event_label': '25%'
+                });
+                scrollTracked['25'] = true;
+            }
+            
+            if (scrollPercent > 50 && !scrollTracked['50']) {
+                window.dataLayer.push({
+                    'event': 'scroll_depth',
+                    'event_category': 'engagement',
+                    'event_label': '50%'
+                });
+                scrollTracked['50'] = true;
+            }
+            
+            if (scrollPercent > 75 && !scrollTracked['75']) {
+                window.dataLayer.push({
+                    'event': 'scroll_depth',
+                    'event_category': 'engagement',
+                    'event_label': '75%'
+                });
+                scrollTracked['75'] = true;
+            }
+            
+            if (scrollPercent > 95 && !scrollTracked['100']) {
+                window.dataLayer.push({
+                    'event': 'scroll_depth',
+                    'event_category': 'engagement',
+                    'event_label': '100%'
+                });
+                scrollTracked['100'] = true;
+            }
+        });
+        
+        // Track Form Field Interactions
+        document.querySelectorAll('.form-group input, .form-group select').forEach(field => {
+            field.addEventListener('focus', function() {
+                window.dataLayer.push({
+                    'event': 'form_interaction',
+                    'event_category': 'engagement',
+                    'event_label': 'Field: ' + this.name
+                });
+            });
+        });
     </script>
 </body>
 </html>
