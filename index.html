@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Consent Mode v2 (must load BEFORE GTM/gtag) -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied',
+            'functionality_storage': 'granted',
+            'security_storage': 'granted',
+            'wait_for_update': 500
+        });
+        gtag('set', 'ads_data_redaction', true);
+    </script>
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -8,6 +24,19 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-MHQVDJSJ');</script>
     <!-- End Google Tag Manager -->
+
+    <!-- Google Analytics 4 (gtag.js) - REPLACE G-XXXXXXXXXX with your GA4 Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX', {
+            'anonymize_ip': true,
+            'send_page_view': true
+        });
+        // Google Ads conversion linker - REPLACE AW-XXXXXXXXX with your Google Ads ID
+        gtag('config', 'AW-XXXXXXXXX');
+    </script>
+    <!-- End Google Analytics 4 -->
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -463,6 +492,81 @@
             color: #93c5fd;
         }
         
+        /* Cookie Consent Banner */
+        .consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0f172a;
+            color: #f1f5f9;
+            padding: 1.5rem 2rem;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            z-index: 9999;
+            box-shadow: 0 -8px 24px rgba(0,0,0,0.25);
+            border-top: 1px solid #1e293b;
+        }
+        .consent-banner.visible {
+            display: flex;
+        }
+        .consent-text {
+            flex: 1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+        .consent-text a {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+        .consent-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+        .consent-btn {
+            padding: 0.7rem 1.4rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .consent-btn.accept {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+        .consent-btn.accept:hover {
+            transform: translateY(-1px);
+        }
+        .consent-btn.reject {
+            background: transparent;
+            color: #cbd5e1;
+            border: 1px solid #475569;
+        }
+        .consent-btn.reject:hover {
+            background: #1e293b;
+        }
+        @media (max-width: 640px) {
+            .consent-banner {
+                flex-direction: column;
+                padding: 1.25rem;
+                gap: 1rem;
+                text-align: center;
+            }
+            .consent-actions {
+                width: 100%;
+            }
+            .consent-btn {
+                flex: 1;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -521,56 +625,58 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Transform Event Data Into <span class="highlight">Intelligent Decisions</span></h1>
-            <p>The only AI-powered platform built for event marketing teams. Predict ROI, optimize attendee targeting, and scale your campaigns with confidence.</p>
+            <h1>Transform Event Data Into <span class="highlight">Smarter Business Decisions</span></h1>
+            <p>The only AI-powered platform designed for event marketing teams. Maximize ROI, optimize attendee targeting, and scale your corporate events with confidence.</p>
             <div class="cta-buttons">
-                <button class="cta-button" onclick="document.getElementById('form').scrollIntoView({behavior: 'smooth'})">Request Demo</button>
-                <button class="cta-button secondary">Learn More</button>
+                <button id="cta-demo-primary" class="cta-button" onclick="trackCTAClick('Request Demo - Primary'); document.getElementById('form').scrollIntoView({behavior: 'smooth'})">Request Demo</button>
+                <button id="cta-learn-more" class="cta-button secondary" onclick="trackCTAClick('Learn More'); document.getElementById('features').scrollIntoView({behavior: 'smooth'})">Learn More</button>
             </div>
         </div>
     </section>
 
     <section id="features" class="features">
+        <h2 class="section-title">Enterprise Event Intelligence Features</h2>
+        <p class="section-subtitle">Everything you need to optimize your B2B event marketing strategy</p>
         <div class="feature-card">
             <div class="feature-icon">🤖</div>
             <h3>AI-Driven ICP Filtering</h3>
-            <p>Automatically identify your most valuable attendees using advanced AI algorithms and granular targeting. Focus your resources on high-conversion prospects.</p>
+            <p>Automatically identify your most valuable prospects using advanced AI algorithms. Focus your event marketing budget on decision-makers who drive revenue.</p>
         </div>
         
         <div class="feature-card">
             <div class="feature-icon">📊</div>
-            <h3>Event Planning ROI Analytics</h3>
-            <p>Measure the return of investment for every event with real-time metrics and predictive modeling. Know what works before you invest heavily.</p>
+            <h3>Event ROI Analytics</h3>
+            <p>Measure the true return on investment for every corporate event. Real-time metrics and predictive modeling help you justify marketing spend to executives.</p>
         </div>
         
         <div class="feature-card">
             <div class="feature-icon">👥</div>
-            <h3>Attendee-Level Analytics</h3>
-            <p>Deep visibility into who's attending what events. Perfect for Account-Based Marketing and strategic decision-making. Track behavior across touchpoints.</p>
+            <h3>Account-Based Marketing</h3>
+            <p>Deep visibility into attendee behavior across touchpoints. Perfect for ABM strategies and strategic account development in B2B event marketing.</p>
         </div>
         
         <div class="feature-card">
             <div class="feature-icon">💰</div>
-            <h3>Built for SMBs</h3>
-            <p>No enterprise bloat. Designed for growing companies who want intelligent event marketing without complexity. Quick implementation, immediate results.</p>
+            <h3>Enterprise-Ready</h3>
+            <p>Built for growing companies that need serious event analytics. No bloat, no complexity. Enterprise-grade insights without enterprise pricing.</p>
         </div>
         
         <div class="feature-card">
             <div class="feature-icon">⚡</div>
-            <h3>Smart Automations</h3>
-            <p>Connect to your marketing stack. Automated workflows for segmentation, retargeting, and lead nurturing. Integrates with your existing tools.</p>
+            <h3>Marketing Stack Integration</h3>
+            <p>Connects seamlessly with your CRM, marketing automation, and sales tools. Automated workflows for lead nurturing and pipeline acceleration.</p>
         </div>
         
         <div class="feature-card">
             <div class="feature-icon">🎯</div>
-            <h3>Predictive Modeling</h3>
-            <p>AI predicts which events will perform best for your business. Eliminate guesswork. Invest in high-probability opportunities.</p>
+            <h3>Predictive Event Modeling</h3>
+            <p>AI predicts which events will perform best for your business. Eliminate guesswork and invest confidently in high-ROI corporate events.</p>
         </div>
     </section>
 
     <section id="comparison" class="comparison">
-        <h2 class="section-title">Why EventAI Wins</h2>
-        <p class="section-subtitle">We built the features that actually matter for event marketers. Here's how we compare.</p>
+        <h2 class="section-title">Why EventAI Wins for Enterprise Event Marketing</h2>
+        <p class="section-subtitle">We built the features that actually matter for B2B event teams. Here's how we compare.</p>
         <div class="comparison-table">
             <div class="table-row">
                 <div class="table-cell">Feature</div>
@@ -594,7 +700,7 @@
             </div>
             
             <div class="table-row">
-                <div class="table-cell feature-name">SMB Pricing</div>
+                <div class="table-cell feature-name">Enterprise Pricing</div>
                 <div class="table-cell"><span class="checkmark">✓</span></div>
                 <div class="table-cell"><span class="cross">✗</span></div>
                 <div class="table-cell"><span class="checkmark">✓</span></div>
@@ -625,10 +731,10 @@
 
     <section id="form" class="form-section">
         <h2 class="section-title">Get Started Today</h2>
-        <p class="section-subtitle">See how EventAI can transform your event marketing strategy</p>
+        <p class="section-subtitle">See how EventAI transforms enterprise event marketing</p>
         <div class="form-container">
-            <h2>Request Your Demo</h2>
-            <p class="form-subtitle">Join 500+ event teams using EventAI</p>
+            <h2>Request Your Enterprise Demo</h2>
+            <p class="form-subtitle">Join 500+ event marketing teams using EventAI to drive better ROI</p>
             <form onsubmit="handleSubmit(event)">
                 <div class="form-group">
                     <label for="name">Full Name</label>
@@ -648,15 +754,16 @@
                 <div class="form-group">
                     <label for="segment">Your Role</label>
                     <select id="segment" name="segment" required>
-                        <option value="">-- Select Role --</option>
-                        <option value="event-manager">Event Manager</option>
+                        <option value="">-- Select Your Role --</option>
+                        <option value="event-manager">Event Marketing Manager</option>
                         <option value="marketing-director">Marketing Director</option>
-                        <option value="demand-gen">Demand Generation</option>
+                        <option value="demand-gen">Demand Generation Manager</option>
+                        <option value="sales-director">Sales Director</option>
                         <option value="other">Other</option>
                     </select>
                 </div>
                 
-                <button type="submit" class="submit-btn">Send Me a Demo Link</button>
+                <button type="submit" class="submit-btn">Send Me Enterprise Demo Access</button>
             </form>
         </div>
     </section>
@@ -666,45 +773,104 @@
         <p style="margin-top: 1rem; font-size: 0.8rem;">Built for IRONHACK Marketing Project</p>
     </footer>
 
+    <!-- Cookie Consent Banner (GDPR / Google Consent Mode v2) -->
+    <div id="consentBanner" class="consent-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+        <div class="consent-text">
+            We use cookies for analytics and advertising to improve your experience.
+            See our <a href="#">Privacy Policy</a>. You can accept, reject, or change your choice anytime.
+        </div>
+        <div class="consent-actions">
+            <button class="consent-btn reject" onclick="setConsent(false)">Reject all</button>
+            <button class="consent-btn accept" onclick="setConsent(true)">Accept all</button>
+        </div>
+    </div>
+
     <script>
         // Initialize dataLayer for GTM
         window.dataLayer = window.dataLayer || [];
         
-        function handleSubmit(event) {
+        // SHA-256 hash helper (for Enhanced Conversions — required to send emails to Google Ads)
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message.trim().toLowerCase());
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            return Array.from(new Uint8Array(hashBuffer))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Track CTA Button Clicks - HERO SECTION
+        function trackCTAClick(buttonName) {
+            // GTM / GA4 event via dataLayer
+            window.dataLayer.push({
+                'event': 'hero_cta_click',
+                'event_category': 'conversion',
+                'event_label': buttonName,
+                'button_name': buttonName
+            });
+            // GA4 direct event (gtag)
+            if (typeof gtag === 'function') {
+                gtag('event', 'cta_click', {
+                    'button_name': buttonName,
+                    'location': 'hero'
+                });
+            }
+            console.log('Hero CTA clicked:', buttonName);
+        }
+
+        // Track Form Submission
+        async function handleSubmit(event) {
             event.preventDefault();
-            
+
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const company = document.getElementById('company').value;
             const segment = document.getElementById('segment').value;
-            
-            // Send conversion to GTM
+
+            // Push to dataLayer WITHOUT raw PII (only non-identifying metadata)
             window.dataLayer.push({
-                'event': 'demo_request',
+                'event': 'form_submission',
                 'event_category': 'conversion',
-                'event_label': 'Demo Request Submitted',
-                'user_name': name,
-                'company': company,
+                'event_label': 'Demo Request Form Submitted',
+                'form_name': 'demo_request',
                 'role': segment,
-                'email': email
+                'company_domain': email.split('@')[1] || ''
             });
-            
-            console.log('Demo request submitted & tracked:', { name, email, company, segment });
-            
-            alert(`Thanks ${name}! We'll send you a demo link at ${email} shortly.`);
+
+            // GA4 conversion event
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'currency': 'EUR',
+                    'value': 50.0,
+                    'role': segment
+                });
+
+                // Google Ads conversion — REPLACE with your conversion ID/label from Ads
+                // Format: 'AW-XXXXXXXXX/AbC-D_efG-h12_34-567'
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-XXXXXXXXX/CONVERSION_LABEL',
+                    'value': 50.0,
+                    'currency': 'EUR'
+                });
+
+                // Enhanced Conversions: hashed email/name for better Ads match rate
+                try {
+                    const [emailHash, nameHash] = await Promise.all([
+                        sha256(email),
+                        sha256(name)
+                    ]);
+                    gtag('set', 'user_data', {
+                        'sha256_email_address': emailHash,
+                        'sha256_first_name': nameHash
+                    });
+                } catch (e) {
+                    console.warn('Enhanced conversion hashing failed:', e);
+                }
+            }
+
+            console.log('Form submitted & tracked (PII redacted from dataLayer)');
+
+            alert(`Thanks ${name}! We'll send enterprise demo access to ${email} shortly.`);
             document.querySelector('form').reset();
         }
-        
-        // Track CTA Button Clicks
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                window.dataLayer.push({
-                    'event': 'cta_click',
-                    'event_category': 'engagement',
-                    'event_label': this.textContent.trim()
-                });
-            });
-        });
         
         // Track Scroll Depth
         let scrollTracked = {
@@ -721,7 +887,7 @@
                 window.dataLayer.push({
                     'event': 'scroll_depth',
                     'event_category': 'engagement',
-                    'event_label': '25%'
+                    'event_label': '25% page scrolled'
                 });
                 scrollTracked['25'] = true;
             }
@@ -730,7 +896,7 @@
                 window.dataLayer.push({
                     'event': 'scroll_depth',
                     'event_category': 'engagement',
-                    'event_label': '50%'
+                    'event_label': '50% page scrolled'
                 });
                 scrollTracked['50'] = true;
             }
@@ -739,7 +905,7 @@
                 window.dataLayer.push({
                     'event': 'scroll_depth',
                     'event_category': 'engagement',
-                    'event_label': '75%'
+                    'event_label': '75% page scrolled'
                 });
                 scrollTracked['75'] = true;
             }
@@ -748,7 +914,7 @@
                 window.dataLayer.push({
                     'event': 'scroll_depth',
                     'event_category': 'engagement',
-                    'event_label': '100%'
+                    'event_label': '100% page scrolled'
                 });
                 scrollTracked['100'] = true;
             }
@@ -758,12 +924,54 @@
         document.querySelectorAll('.form-group input, .form-group select').forEach(field => {
             field.addEventListener('focus', function() {
                 window.dataLayer.push({
-                    'event': 'form_interaction',
+                    'event': 'form_field_interaction',
                     'event_category': 'engagement',
-                    'event_label': 'Field: ' + this.name
+                    'event_label': 'Focused on: ' + this.name
                 });
             });
         });
+
+        // ===== Cookie Consent (Google Consent Mode v2) =====
+        const CONSENT_KEY = 'eventai_consent_v1';
+
+        function setConsent(granted) {
+            const status = granted ? 'granted' : 'denied';
+            gtag('consent', 'update', {
+                'ad_storage': status,
+                'ad_user_data': status,
+                'ad_personalization': status,
+                'analytics_storage': status
+            });
+            try {
+                localStorage.setItem(CONSENT_KEY, JSON.stringify({
+                    granted: granted,
+                    ts: Date.now()
+                }));
+            } catch (e) { /* localStorage may be blocked */ }
+            document.getElementById('consentBanner').classList.remove('visible');
+            window.dataLayer.push({
+                'event': 'consent_decision',
+                'consent_granted': granted
+            });
+        }
+
+        // Show banner only if user hasn't decided yet
+        (function initConsent() {
+            let stored = null;
+            try { stored = JSON.parse(localStorage.getItem(CONSENT_KEY) || 'null'); } catch (e) {}
+            if (stored && typeof stored.granted === 'boolean') {
+                // Re-apply prior decision so tags know the state on every page load
+                const status = stored.granted ? 'granted' : 'denied';
+                gtag('consent', 'update', {
+                    'ad_storage': status,
+                    'ad_user_data': status,
+                    'ad_personalization': status,
+                    'analytics_storage': status
+                });
+            } else {
+                document.getElementById('consentBanner').classList.add('visible');
+            }
+        })();
     </script>
 </body>
 </html>
